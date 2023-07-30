@@ -1,8 +1,8 @@
 # Algorithm Logs
 
-"""
-date: 2023年7月29日 09点55分
-"""
+#===============================================================================
+# date: 2023/07/29
+#===============================================================================
 class Solution:
     def generateMatrix(self, n: int) -> list[list[int]]:
         """"
@@ -27,3 +27,47 @@ class Solution:
             j += dj
             matrix[i][j] = key # 矩阵赋值
         return matrix
+
+#===============================================================================
+# date: 2023/07/30
+#===============================================================================
+from typing import Optional
+# Definition for singly-linked list.
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+class Solution:
+    def rotateRight(self, head: Optional[ListNode], k: int) -> Optional[ListNode]:
+        """
+        旋转链表：
+        这道题目要求向右旋转指定次数, 思路就是先将链表首尾相连, 然后根据次数移动现在相邻的首尾
+        node, 最后将尾部节点指向None, 返回首节点即可。
+        """
+        
+        # 空链表或者只有一个元素的链表直接返回头节点
+        if not head or not head.next:
+            return head
+        # 利用pre记录链表首节点
+        pre = head
+        # 记录链表长度
+        length = 1
+        # 遍历链表找到尾节点，并计算链表长度
+        while head.next:
+            length += 1
+            head = head.next
+        # 首尾相连
+        head.next = pre
+        # 移动次数超过链表长度时取余
+        k = k % length
+        # 此时链表方向为向左, 用链表长度减去移动次数改变方向为向右(画图增加理解)
+        k = length - k
+        # 开始移动
+        if k > 0:
+            for i in range(k):
+                head = pre
+                pre = head.next
+        # 移动结束，将尾部节点指向None
+        head.next = None
+        # 返回首节点
+        return pre
