@@ -78,6 +78,7 @@ class Solution:
 class Solution(object):
     def uniquePaths(self, m, n):
         """
+        不同路径：
         这道题有很多解法，这里采用动态规划，先对每一行进行更新，然后对每一列进行更新：
         第一行只有一条路径，所以全为1，第一列同理全为1；
         其余位置只有有上一行或者上一列的位置达到，所以值等于二者之和dp[i] = dp[i-1] + dp[i]
