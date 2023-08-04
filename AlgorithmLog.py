@@ -92,3 +92,37 @@ class Solution(object):
                 # 等式右边的 dp[j]是上一次计算后的，加上左边的dp[j-1]即为当前结果
                 dp[j] = dp[j] + dp[j - 1]
         return dp[-1]
+
+#===============================================================================
+# date: 2023/08/04
+#===============================================================================
+class Solution:
+    def uniquePathsWithObstacles(self, obstacleGrid: List[List[int]]) -> int:
+        """
+        不同路径Ⅱ:
+        思路和没有障碍相同，只是外加一个对当前点的判断，如果值为1就设为0，不能达到这里，
+        不为1时更新路径总数: dp[j] = dp[j] + dp[j-1], 详情可ctrl+f搜索"不同路径"。
+        """
+        m = len(obstacleGrid) # 行
+        n = len(obstacleGrid[0]) # 列
+        # 动态规划第一个元素
+        if obstacleGrid[0][0] == 1: # 动态规划第一个元素
+            dp = [0]
+        else:
+            dp = [1]
+        # 第一行的情况
+        for i in range(1,n):
+            if obstacleGrid[0][i] == 1:
+                dp.append(0)
+            else:
+                dp.append(dp[-1])
+        # 从第二行开始的情况
+        for i in range(1,m):
+            for j in range(n):
+                if obstacleGrid[i][j] == 1:
+                    dp[j] = 0
+                elif j == 0:
+                    dp[j] = dp[j]
+                else:
+                    dp[j] = dp[j] + dp[j-1]
+        return dp[-1]
