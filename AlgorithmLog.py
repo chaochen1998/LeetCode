@@ -126,3 +126,31 @@ class Solution:
                 else:
                     dp[j] = dp[j] + dp[j-1]
         return dp[-1]
+
+#===============================================================================
+# date: 2023/08/04
+#===============================================================================
+class Solution:
+    def minPathSum(self, grid: List[List[int]]) -> int:
+        """
+        最小路径和：
+        对于给出的grid中间的任意一个点，到达的最小路径为其前方点和上方点的最小路径加上
+        该点的数字，所以可以使用动态规划更新标准为: dp[j] = min(dp[j],dp[j-1]) + grid[i][j]
+        """
+        # 获得网格信息
+        r = len(grid)
+        c = len(grid[0])
+        #初始化dp
+        dp = []
+        dp.append(grid[0][0])
+        for i in range(1,c):
+            dp.append(grid[0][i] + dp[i-1])
+        # 从第二行开始
+        for i in range(1,r):
+            # 第一个元素只能由上方元素得到
+            dp[0] = dp[0] + grid[i][0]
+            # 从第二列开始
+            for j in range(1,c):
+                # 更新dp
+                dp[j] = min(dp[j], dp[j-1]) + grid[i][j]
+        return dp[-1]
