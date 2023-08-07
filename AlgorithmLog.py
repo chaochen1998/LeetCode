@@ -199,3 +199,34 @@ class Solution:
         for s in res:
             out += '/'+s
         return out
+
+#===============================================================================
+# date: 2023/08/07
+#===============================================================================
+
+class Solution:
+    def setZeroes(self, matrix: List[List[int]]) -> None:
+        """
+        矩阵置零:
+        开始使用了比较笨的办法，先遍历给0做标记，然后再遍历给有标记的所在行和列设置为0。
+        改进是给零元素所在首行和首列做标记，然后单独设置标签表示首行是否存在零，第二次遍历时
+        只需要判断该元素所在行头或列头是否为0。
+        来自力扣-画图小匠
+        """
+        m = len(matrix)
+        n = len(matrix[0])
+        first_row = False   # 标记首行是否有0元素
+        for i, row in enumerate(matrix):
+            for j, item in enumerate(row):
+                if i == 0 and item == 0:
+                    first_row = True    # 首行出现0元素，用标志位标记
+                elif item == 0:
+                    matrix[i][0] = 0    # 非首行出现0元素，将对应的列首置为0，说明该列要置为0
+                    matrix[0][j] = 0    # 将对应的行首置为0，说明该行要置为0
+        for i in range(m - 1, -1, -1):
+            for j in range(n - 1, -1, -1):
+                # 从最后一个元素反向遍历，避免行首和列首的信息被篡改
+                if i == 0 and first_row:
+                    matrix[i][j] = 0    # 首行元素是否置为0看标志位
+                elif i != 0 and (matrix[i][0] == 0 or matrix[0][j] == 0):
+                    matrix[i][j] = 0    # 非首行元素是否置为0看行首和列首是否为0
