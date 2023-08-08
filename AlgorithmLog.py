@@ -230,3 +230,31 @@ class Solution:
                     matrix[i][j] = 0    # 首行元素是否置为0看标志位
                 elif i != 0 and (matrix[i][0] == 0 or matrix[0][j] == 0):
                     matrix[i][j] = 0    # 非首行元素是否置为0看行首和列首是否为0
+
+#===============================================================================
+# date: 2023/08/08
+#===============================================================================
+class Solution:
+    def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:
+        """
+        搜索二维矩阵:
+        每一行按照升序排列，每一列也按照升序排列, 所以左下和右上连线上上的点向右移动变大，向上移动变小,
+        因此只需要遍历即可。
+        """
+        # 获得矩阵大小
+        m,n = len(matrix),len(matrix[0])
+        # 从左下点开始遍历
+        i = m -1
+        j = 0
+        # 超出边界时说明没有找到target
+        while i >=0 and j < n:
+            # 找到相同时直接返回True
+            if matrix[i][j] == target:
+                return True
+            # 小于target向右边移动
+            elif matrix[i][j] < target:
+                j += 1
+            # 大于target向上方移动
+            else:
+                i -= 1
+        return False
