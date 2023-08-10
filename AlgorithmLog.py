@@ -258,3 +258,38 @@ class Solution:
             else:
                 i -= 1
         return False
+
+#===============================================================================
+# date: 2023/08/10
+#===============================================================================
+class Solution:
+    def sortColors(self, nums: List[int]) -> None:
+        """
+        Classify the colors in order. In other words, sort the numbers in the list.
+        Traverse the array once, the large one is exchanged with the last element 
+        of the array, the small one is exchanged with the front of the array, and 
+        the subscript is constantly indented.
+        """
+        # get the length of the list
+        length = len(nums)
+        # when the length of the list is less than 2, which means we don't need to change the list.
+        if length < 2:
+            return
+        # set the left index to zero
+        left = 0
+        # set the right index to the lenght
+        right = length
+        i = 0
+        while i < right:
+            # when the current value equals to 0, exchange with the left number, move both i and left forward
+            if nums[i] == 0:
+                nums[left], nums[i] = nums[i], nums[left]
+                left += 1
+                i += 1
+            # when the current value equals to 1, do nothing but move i forward
+            elif nums[i] == 1:
+                i += 1
+            # when the current value equals to 2, exchange with the right number, move right backward
+            else:
+                right -= 1
+                nums[right], nums[i] = nums[i], nums[right]
