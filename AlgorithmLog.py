@@ -293,3 +293,35 @@ class Solution:
             else:
                 right -= 1
                 nums[right], nums[i] = nums[i], nums[right]
+
+#===============================================================================
+# date: 2023/08/10
+#===============================================================================
+class Solution:
+    def combine(self, n: int, k: int) -> List[List[int]]:
+        """
+        组合：
+        给定n和k，在1到n中的自然数中任取k个不同的数，输出不同的组合总数。
+        利用最大深度搜索dfs
+        """
+        # 所有可以选择的数组合
+        target = [i for i in range(1,n+1)]
+        # 储存每个组合
+        out = []
+        # 储存所有组合
+        res = []
+        def dfs(target,k):
+            # 如果待组合个数为0，那么一个组合已经完整，添加到输出中
+            if k == 0:
+                res.append(out.copy())
+                return
+            # 遍历后续的所有可取数字
+            for i in range(len(target)):
+                # 添加到组合中
+                out.append(target[i])
+                # 对剩下需要添加的数字进行同样的操作
+                dfs(target[i+1:],k-1)
+                # 删除最上面的数字开始回溯
+                out.pop()
+        dfs(target,k)
+        return res
