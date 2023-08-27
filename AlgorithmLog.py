@@ -344,3 +344,63 @@ class Solution:
             # 更新数组为原数组加上所有元素与新增数字的组合
             res = res + [[i] + num for num in res]
         return res
+
+#===============================================================================
+# date: 2023/08/27
+#===============================================================================
+class Solution(object):
+    """
+    单词搜索：
+    在给定的二维数组里寻找是否存在给定的单词，单词必须按照字母顺序，通过相邻的单元格内的字母构成，
+    其中“相邻”单元格是那些水平相邻或垂直相邻的单元格。同一个单元格内的字母不允许被重复使用。
+    类似于这种与相邻单元格相关的问题，都可以用遍历+递归的方法解决：首先依次遍历二维数组，找到与
+    单词首字母相同的元素，递归开始，依次判断该位置的相邻元素是否与单词的第二个字母相同，直到找到
+    单词最后一个字母，返回True，否则返回False。
+    """
+    # 初始化四个相邻位置
+    direction = [(1,0), (0,1), (-1,0), (0,-1)]
+    def exist(self, board, word):
+        h = len(board)
+        # 二维数组为空，直接返回False
+        if h == 0:
+            return False
+        w = len(board[0])
+        # 用一个全为0的相同大小的数组来记录当前元素是否被使用
+        mark = [[0]*w for i in range(h)]
+        # 遍历开始
+        for i in range(h):
+            for j in range(w):
+                # 如果元素与单词首字母相同，开始递归
+                if board[i][j] == word[0]:
+                    # 标记该字母已经使用
+                    mark[i][j] = 1
+                    # 如果递归结果为True，说明找到了单词
+                    if self.check(i,j,mark,board,word[1:]):
+                        return True
+                    # 如果没找到，重新设该字母为未使用
+                    else:
+                        mark[i][j] = 0
+        return False
+    
+    def check(self, i, j, mark, board, word):
+        # 如果待检查单词为空，说明已经找到单词
+        if len(word) == 0:
+            return True
+        # 依次遍历四个相邻位置
+        for coor in self.direction:
+            # 更新下表
+            ci, cj = i+coor[0], j+coor[1]
+            # 判断是否满足下标，以及是否与单词目前的首字母相同
+            if 0<=ci<len(board) and 0<=cj<len(board[0]) and board[ci][cj] == word[0]:
+                # 如果已经使用过，跳过
+                if mark[ci][cj] == 1:
+                    continue
+                # 标记为已经使用
+                mark[ci][cj] = 1
+                # 开始递归
+                if self.check(ci,cj,mark,board,word[1:]):
+                    return True
+                # 如果未能找到单词，恢复之前使用的元素为未使用状态
+                else:
+                    mark[ci][cj] = 0
+        return False
