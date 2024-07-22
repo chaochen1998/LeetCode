@@ -9,11 +9,35 @@ coresponding code
 """
 
 #===============================================================================
+# date: 2024/07/22 560.和为k的子数组
+#===============================================================================
+
+class Solution:
+    def subarraySum(self, nums: List[int], k: int) -> int:
+        """
+        解决该问题的关键是计算nums[i:j]的和为k的数量，i和j在0到n之间，
+        既nums[:j]-nums[:i]=k，所以首先第一步是计算出该数组的前缀和，
+        然后对于每一个位置的前缀和presum，如果位置靠前的前缀和存在为presum-k，
+        那么有多少个presum-k，当前位置满足的子数组数量就有多少个，可以用字典来
+        储存之前位置的前缀和信息。
+        """
+        count = 0
+        n = len(nums)
+        preSums = collections.defaultdict(int)
+        preSums[0] = 1
+        presum = 0
+        for i in range(n):
+            presum += nums[i] # 每个位置的前缀和
+            count += preSums[presum-k] # 查询考前位置和为presum-k的数量
+            preSums[presum] += 1 # 给当前的presum个数加1
+        return count
+
+#===============================================================================
 # date: 2023/07/29
 #===============================================================================
 class Solution:
     def generateMatrix(self, n: int) -> list[list[int]]:
-        """"
+        """
         螺旋矩阵Ⅱ：
         这道题的难点就是如何改变旋转的方向, 与螺旋矩阵one类似, 采用一个数组保存四个方向(directions),
         然后设置初始方向为向右，所以启示坐标设置为(0,-1), 输出的矩阵初始化为全0, 更改前进方向的条件为:
