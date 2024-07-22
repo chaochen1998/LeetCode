@@ -7,10 +7,39 @@ the notes is above the coresponding code like this:
 coresponding code
 
 """
+#===============================================================================
+# date: 2024/07/22 239. 滑动窗口最大值
+#===============================================================================
+
+import collections
+
+
+class Solution:
+    def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
+        """
+        暴力求救时间复杂度较高，无法通过所有测试用例。
+        维护一个单调递减队列q，q[0]为当前窗口内的最大值，从第一个元素开始循环，
+        当q[-1]小于等于当前元素时将其弹出，直到不满足条件，当当前元素下标与q中
+        最大值坐标距离大于等于k时，将q[0]弹出，从k-1个元素开始记录答案。
+        """
+        ans = []
+        q = collections.deque()
+        for i,x in enumerate(nums):
+            while q and nums[q[-1]] <= x:
+                q.pop()
+            q.append(i)
+            if i - q[0] >= k:
+                q.popleft()
+            if i >= k-1:
+                ans.append(nums[q[0]])
+        return ans
 
 #===============================================================================
 # date: 2024/07/22 560.和为k的子数组
 #===============================================================================
+
+import collections
+
 
 class Solution:
     def subarraySum(self, nums: List[int], k: int) -> int:
@@ -63,7 +92,7 @@ class Solution:
 #===============================================================================
 # date: 2023/07/30
 #===============================================================================
-from typing import Optional
+from typing import List, Optional
 # Definition for singly-linked list.
 class ListNode:
     def __init__(self, val=0, next=None):
