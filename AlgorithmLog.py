@@ -7,8 +7,25 @@ the notes is above the coresponding code like this:
 coresponding code
 
 """
+
 #===============================================================================
-# date: 2024/07/23 76.最小覆盖字串
+# date: 2024/07/23 53.最大数组和
+#===============================================================================
+
+class Solution:
+    def maxSubArray(self, nums: List[int]) -> int:
+        """
+        经典动态规划题目
+        dp[i] = max(dp[i-1]+nums[i], nums[i])
+        """
+        dp = [0] * len(nums)
+        dp[0] = nums[0]
+        for i in range(1,len(nums)):
+            dp[i] = max(nums[i], dp[i-1]+nums[i])
+        return max(dp)
+
+#===============================================================================
+# date: 2024/07/23 76.最小覆盖子串
 #===============================================================================
 import collections
 
