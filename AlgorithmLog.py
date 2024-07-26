@@ -8,6 +8,32 @@ coresponding code
 
 """
 
+#===============================================================================
+# date: 2024/07/26 41.缺失的第一个正数
+#===============================================================================
+
+class Solution:
+    def firstMissingPositive(self, nums: List[int]) -> int:
+        """
+        进行第一次遍历，将不在1到N的数字全部换为N+1；
+        进行第二次遍历，将nums中坐标为nums[i]-1的数字变为负数，
+        然后第三次遍历，找到nums[i]中大于0的下标，将其加1返回，或者返回N+1
+        """
+        n = len(nums)
+        for i in range(n):
+            if nums[i] <= 0:
+                nums[i] = n + 1
+        
+        for i in range(n):
+            tmp = abs(nums[i])
+            if tmp <= n:
+                nums[tmp-1] = -abs(nums[tmp-1])
+        
+        for i in range(n):
+            if nums[i] > 0:
+                return i+1
+        return n+1
+
 
 #===============================================================================
 # date: 2024/07/25 238.除自身以外数组的乘积
