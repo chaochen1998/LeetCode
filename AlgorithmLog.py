@@ -9,6 +9,31 @@ coresponding code
 """
 
 #===============================================================================
+# date: 2024/07/26 73.矩阵置零
+#===============================================================================
+
+import copy
+class Solution:
+    def setZeroes(self, matrix: List[List[int]]) -> None:
+        """
+        Do not return anything, modify matrix in-place instead.
+        遍历矩阵每个元素，标记原本为0的元素所在行和列，再次遍历将行或者列被标记的元素设为0即可。
+        """
+        h,w = len(matrix),len(matrix[0])
+        col = [False] * w
+        row = [False] * h
+        for i in range(h):
+            for j in range(w):
+                if matrix[i][j] == 0:
+                    col[j] = True
+                    row[i] = True
+        
+        for i in range(h):
+            for j in range(w):
+                if col[j] or row[i]:
+                    matrix[i][j] = 0
+
+#===============================================================================
 # date: 2024/07/26 41.缺失的第一个正数
 #===============================================================================
 
@@ -33,7 +58,6 @@ class Solution:
             if nums[i] > 0:
                 return i+1
         return n+1
-
 
 #===============================================================================
 # date: 2024/07/25 238.除自身以外数组的乘积
