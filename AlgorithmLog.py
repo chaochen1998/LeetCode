@@ -9,6 +9,41 @@ coresponding code
 """
 
 #===============================================================================
+# date: 2024/07/28 138.随机链表的复制
+#===============================================================================
+
+# Definition for a Node.
+class Node:
+    def __init__(self, x: int, next: 'Node' = None, random: 'Node' = None):
+        self.val = int(x)
+        self.next = next
+        self.random = random
+
+class Solution:
+    def copyRandomList(self, head: 'Optional[Node]') -> 'Optional[Node]':
+        """
+        用一个字典d储存key为原节点，value为新节点，然后遍历原始链表，d[cur].next = d[cur.next]
+        d[cur].random = d[cur.random]
+        """
+        if not head:
+            return None
+        d = dict()
+        cur = head
+        while cur:
+            new = Node(cur.val)
+            d[cur] = new
+            cur = cur.next
+        p = head
+        while p:
+            if p.next:
+                d[p].next = d[p.next]
+            
+            if p.random:
+                d[p].random = d[p.random]
+            p = p.next
+        return d[head]
+
+#===============================================================================
 # date: 2024/07/28 203.移除链表元素
 #===============================================================================
 
