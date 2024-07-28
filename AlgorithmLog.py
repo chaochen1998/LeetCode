@@ -9,6 +9,39 @@ coresponding code
 """
 
 #===============================================================================
+# date: 2024/07/28 203.移除链表元素
+#===============================================================================
+
+# Definition for singly-linked list.
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+class Solution:
+    def removeElements(self, head: Optional[ListNode], val: int) -> Optional[ListNode]:
+        """
+        初始化两个节点，一个节点的next为head，另一个节点初始化为head；
+        遍历整个链表，处理一个特殊情况，既head的节点val与目标val相同，这时候需要将head指向其next
+        """
+        if not head:
+            return head
+        pre = ListNode(val=-1,next=head) # 初始化前向节点，值为负数
+        cur = head # 初始化当前节点
+        while cur: # 为空则退出
+            if cur.val == val: # 当前节点值为目标val
+                if pre.val == -1: # 此时代表头节点的值为val
+                    pre.next = cur.next 
+                    cur = pre.next
+                    head = cur # 更新头节点
+                else: # 其余情况
+                    pre.next = cur.next
+                    cur = pre.next
+            else: # 不相等则将节点向后移动
+                pre = pre.next
+                cur = cur.next
+        return head
+
+#===============================================================================
 # date: 2024/07/26 73.矩阵置零
 #===============================================================================
 
