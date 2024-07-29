@@ -9,6 +9,34 @@ coresponding code
 """
 
 #===============================================================================
+# date: 2024/07/29 19.删除链表的倒数第N个节点
+#===============================================================================
+
+# Definition for a Node.
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+class Solution:
+    def removeNthFromEnd(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
+        length = 0
+        cur = head
+        while cur:
+            length += 1
+            cur = cur.next
+        target_index = length + 1 - n
+        dummy = ListNode(next=head)
+        pre = dummy
+        cur = head
+        while target_index-1 != 0:
+            pre = pre.next
+            cur = cur.next
+            target_index -= 1
+        pre.next = cur.next
+        return dummy.next
+
+#===============================================================================
 # date: 2024/07/29 147.对链表进行插入排序
 #===============================================================================
 
