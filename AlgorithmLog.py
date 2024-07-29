@@ -9,6 +9,41 @@ coresponding code
 """
 
 #===============================================================================
+# date: 2024/07/29 147.对链表进行插入排序
+#===============================================================================
+
+# Definition for a Node.
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+class Solution:
+    def insertionSortList(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        """
+        标准链表插入排序
+        """
+        while not head or not head.next:
+            return head
+        
+        dummy = ListNode(-1, head)
+        cur = head.next
+        sorted_list = head
+
+        while cur:
+            if sorted_list.val <= cur.val:
+                sorted_list = sorted_list.next
+            else:
+                prev = dummy
+                while prev.next.val <= cur.val:
+                    prev = prev.next
+                sorted_list.next = cur.next
+                cur.next = prev.next
+                prev.next = cur
+            cur = sorted_list.next
+        return dummy.next
+
+#===============================================================================
 # date: 2024/07/28 138.随机链表的复制
 #===============================================================================
 
