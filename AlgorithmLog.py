@@ -9,6 +9,27 @@ coresponding code
 """
 
 #===============================================================================
+# date: 2024/07/30 160.相交链表
+#===============================================================================
+
+# Definition for singly-linked list.
+class ListNode:
+    def __init__(self, x):
+        self.val = x
+        self.next = None
+
+class Solution:
+    def getIntersectionNode(self, headA: ListNode, headB: ListNode) -> Optional[ListNode]:
+        """
+        首尾连接A和B，B和A，并分别从头开始遍历，直到两个curnode相等
+        """
+        A, B = headA, headB
+        while A != B:
+            A = A.next if A else headB
+            B = B.next if B else headA
+        return B
+
+#===============================================================================
 # date: 2024/07/29 48.旋转图像
 #===============================================================================
 
