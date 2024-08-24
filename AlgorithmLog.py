@@ -7,6 +7,35 @@ the notes is above the coresponding code like this:
 coresponding code
 
 """
+import collections
+
+#===============================================================================
+# date: 2024/08/24 437.路径总和Ⅲ
+#===============================================================================
+# Definition for a binary tree node.
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+class Solution:
+    def pathSum(self, root: Optional[TreeNode], targetSum: int) -> int:
+        ans = 0
+        cnt = collections.defaultdict(int)
+        cnt[0] = 1
+        def dfs(root,s):
+            if root is None:
+                return
+            s += root.val
+            ans += cnt[s-targetSum]
+            cnt[s] += 1
+            dfs(root.left,s)
+            dfs(root.right,s)
+            cnt[s] -= 1
+        dfs(root,0)
+        return ans
+        
+
 
 #===============================================================================
 # date: 2024/07/30 206.反转链表
@@ -335,8 +364,6 @@ class Solution:
 #===============================================================================
 # date: 2024/07/23 76.最小覆盖子串
 #===============================================================================
-import collections
-
 class Solution:
     def minWindow(self, s: str, t: str) -> str:
         """
@@ -372,10 +399,6 @@ class Solution:
 #===============================================================================
 # date: 2024/07/22 239. 滑动窗口最大值
 #===============================================================================
-
-import collections
-
-
 class Solution:
     # for test
     def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
@@ -400,10 +423,6 @@ class Solution:
 #===============================================================================
 # date: 2024/07/22 560.和为k的子数组
 #===============================================================================
-
-import collections
-
-
 class Solution:
     def subarraySum(self, nums: List[int], k: int) -> int:
         """
