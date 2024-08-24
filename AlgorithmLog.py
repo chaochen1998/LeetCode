@@ -8,6 +8,29 @@ coresponding code
 
 """
 import collections
+from math import inf
+
+#===============================================================================
+# date: 2024/08/24 124.二叉树中的最大路径
+#===============================================================================
+# Definition for a binary tree node.
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+class Solution:
+    def maxPathSum(self, root: Optional[TreeNode]) -> int:
+        ans = -inf
+        def dfs(root):
+            if not root:
+                return 0
+            left = dfs(root.left)
+            right = dfs(root.right)
+            ans = max(ans,left+right+root.val)
+            return max(max(left,right)+root.val,0)
+        dfs(root)
+        return ans
 
 #===============================================================================
 # date: 2024/08/24 236.二叉树的最近公共祖先
